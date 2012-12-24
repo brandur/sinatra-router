@@ -15,8 +15,8 @@ Now as part of a builder or rackup (i.e. `config.ru`):
 
 ``` ruby
 run Sinatra::Router do
-  route API::Apps
-  route API::Users
+  route API::Apps    # /apps
+  route API::Users   # /users
 end
 ```
 
