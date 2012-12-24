@@ -3,6 +3,8 @@ sinatra-router
 
 A tiny vendorable router that makes it easy to try routes from a number of different modular Sinatra applications.
 
+The motivation behind the project is to provide an easy way of composing a larger application that's been split out into a number of discrete Sinatra apps for purposes of code modularity and isolation.
+
 In your `Gemfile`:
 
 ``` ruby
@@ -43,7 +45,7 @@ run Sinatra::Router do
 end
 ```
 
-Or extend the class to create your own concise DSL:
+Or extend the router class to create your own concise DSL:
 
 ``` ruby
 module API
