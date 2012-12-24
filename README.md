@@ -74,6 +74,8 @@ end
 
 ## Development
 
+Run the tests:
+
 ``` bash
 ruby test/sinatra/router_test.rb
 ```
