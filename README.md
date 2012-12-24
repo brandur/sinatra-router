@@ -14,9 +14,24 @@ gem 'sinatra-router'
 Now as part of a builder or rackup (i.e. `config.ru`):
 
 ``` ruby
+module API
+  class Apps < Sinatra::Base
+    get "/apps" do
+      200
+    end
+  end
+
+  class Users < Sinatra::Base
+    get "/users" do
+      200
+    end
+  end
+end
+
+# config.ru
 run Sinatra::Router do
-  route API::Apps    # /apps
-  route API::Users   # /users
+  route API::Apps     # /apps
+  route API::Users    # /users
 end
 ```
 
