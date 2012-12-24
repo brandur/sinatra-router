@@ -87,6 +87,34 @@ run API::Router do
 end
 ```
 
+## Passing and X-Cascade
+
+Sinatra-router supports Rack's `X-Cascade` standard so that modules are able to transparently pass from one to the other as if they were part of the same application:
+
+``` ruby
+module API
+  class AppsV1 < Sinatra::Base
+    get "/apps" do
+      # drops through to AppsV2 GET / unless request is version 1
+      pass unless version == 1
+      200
+    end
+  end
+
+  class AppsV2 < Sinatra::Base
+    get "/apps" do
+      200
+    end
+  end
+end
+
+# config.ru
+run Sinatra::Router do
+  route API::AppsV1
+  route API::AppsV2
+end
+```
+
 ## Development
 
 Run the tests:
