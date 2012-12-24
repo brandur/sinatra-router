@@ -89,7 +89,7 @@ end
 
 ## Passing and X-Cascade
 
-Sinatra-router supports Rack's `X-Cascade` standard so that modules are able to transparently pass from one to the other as if they were part of the same application:
+Sinatra and sinatra-router support Rack's `X-Cascade` standard so that modules are able to transparently pass from one to the other as if they were part of the same application:
 
 ``` ruby
 module API
