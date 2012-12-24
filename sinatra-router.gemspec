@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name        = "sinatra-router"
-  gem.version     = "0.1.0"
+  gem.version     = "0.1.1"
 
   gem.author      = "Brandur"
   gem.email       = "brandur@mutelight.org"
@@ -9,4 +9,6 @@ Gem::Specification.new do |gem|
   gem.summary     = "A tiny vendorable router that makes it easy to try routes from a number of different modular Sinatra applications."
 
   gem.files = %w{lib/sinatra/router.rb}
+
+  gem.add_dependency "sinatra", "~> 1.3.3"
 end
