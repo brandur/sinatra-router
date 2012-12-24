@@ -20,6 +20,11 @@ Apps = (0..3).map do |i|
   end
 end
 
+# generates a condition lambda suitable for testing
+def condition(i)
+  lambda { |e| e["HTTP_X_COND#{i}"] == "true" }
+end
+
 describe Sinatra::Router do
   include Rack::Test::Methods
 
@@ -27,15 +32,12 @@ describe Sinatra::Router do
     def app
       Sinatra::Router.new do
         route Apps[0]
-        route Apps[1], lambda { |e| e["HTTP_X_COND1"] == "true" }
+        route Apps[1], condition(1)
 
-        with_conditions(lambda { |e| e["HTTP_X_COND2"] == "true" }) do
+        with_conditions(condition(2)) {
           route Apps[2]
-
-          with_conditions(lambda { |e| e["HTTP_X_COND3"] == "true" }) do
-            route Apps[3]
-          end
-        end
+          with_conditions(condition(3)) { route Apps[3] }
+        }
 
         run lambda { |env| [404, {}, []] }
       end
@@ -97,15 +99,12 @@ describe Sinatra::Router do
       Rack::Builder.new do
         use Sinatra::Router do
           route Apps[0]
-          route Apps[1], lambda { |e| e["HTTP_X_COND1"] == "true" }
+          route Apps[1], condition(1)
 
-          with_conditions(lambda { |e| e["HTTP_X_COND2"] == "true" }) do
+          with_conditions(condition(2)) {
             route Apps[2]
-
-            with_conditions(lambda { |e| e["HTTP_X_COND3"] == "true" }) do
-              route Apps[3]
-            end
-          end
+            with_conditions(condition(3)) { route Apps[3] }
+          }
         end
 
         run lambda { |env| [404, {}, []] }
