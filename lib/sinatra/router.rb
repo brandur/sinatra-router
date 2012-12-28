@@ -13,7 +13,8 @@ module Sinatra
       if ret = try_route(env["REQUEST_METHOD"], env["PATH_INFO"], env)
         ret
       else
-        raise "neither @app nor @run is set" if !@app && !@run
+        raise "router needs to be (1) mounted as middleware or (b) contain " +
+          "a default run statement" if !@app && !@run
 
         # if set as middlware, prefer that, otherwise try default run module
         (@app || @run).call(env)
