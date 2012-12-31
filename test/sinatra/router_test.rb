@@ -31,12 +31,12 @@ describe Sinatra::Router do
   describe "as a rack app" do
     def app
       Sinatra::Router.new do
-        route Apps[0]
-        route Apps[1], condition(1)
+        mount Apps[0]
+        mount Apps[1], condition(1)
 
         with_conditions(condition(2)) {
-          route Apps[2]
-          with_conditions(condition(3)) { route Apps[3] }
+          mount Apps[2]
+          with_conditions(condition(3)) { mount Apps[3] }
         }
 
         run lambda { |env| [404, {}, []] }
@@ -98,12 +98,12 @@ describe Sinatra::Router do
     def app
       Rack::Builder.new do
         use Sinatra::Router do
-          route Apps[0]
-          route Apps[1], condition(1)
+          mount Apps[0]
+          mount Apps[1], condition(1)
 
           with_conditions(condition(2)) {
-            route Apps[2]
-            with_conditions(condition(3)) { route Apps[3] }
+            mount Apps[2]
+            with_conditions(condition(3)) { mount Apps[3] }
           }
         end
 

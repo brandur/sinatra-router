@@ -27,7 +27,7 @@ module Sinatra
       @run = app
     end
 
-    def route(app, *conditions)
+    def mount(app, *conditions)
       # mix in context based conditions with conditions given by parameter
       @apps << [app, @conditions + conditions]
     end

@@ -30,8 +30,8 @@ end
 
 # config.ru
 run Sinatra::Router do
-  route API::Apps     # /apps
-  route API::Users    # /users
+  mount API::Apps     # /apps
+  mount API::Users    # /users
 end
 ```
 
@@ -39,8 +39,8 @@ Or mount it as middleware:
 
 ``` ruby
 use Sinatra::Router do
-  route API::Apps
-  route API::Users
+  mount API::Apps
+  mount API::Users
 end
 run Sinatra::Application
 ```
@@ -52,11 +52,11 @@ Add routing conditions with arguments or blocks:
 ``` ruby
 run Sinatra::Router do
   with_conditions(lambda { |e| e["HTTP_X_VERSION"] == "2" }) do
-    route API::Apps
-    route API::Users
+    mount API::V2::Apps
+    mount API::V2::Users
   end
 
-  route API::Users, lambda { |e| e["HTTP_X_VERSION"] == "1" }
+  mount API::V1::Users, lambda { |e| e["HTTP_X_VERSION"] == "1" }
 end
 ```
 
@@ -79,11 +79,11 @@ end
 # config.ru
 run API::Router do
   version 2 do
-    route API::Apps
-    route API::Users
+    mount API::V2::Apps
+    mount API::V2::Users
   end
 
-  route API::Users, version(1)
+  mount API::V1::Users, version(1)
 end
 ```
 
@@ -93,25 +93,29 @@ Sinatra and sinatra-router support Rack's `X-Cascade` standard so that modules a
 
 ``` ruby
 module API
-  class AppsV1 < Sinatra::Base
-    get "/apps" do
-      # drops through to AppsV2 GET / unless request is version 1
-      pass unless version == 1
-      200
+  module V1
+    class Apps < Sinatra::Base
+      get "/apps" do
+        # drops through to AppsV2 GET / unless request is version 1
+        pass unless version == 1
+        200
+      end
     end
   end
 
-  class AppsV2 < Sinatra::Base
-    get "/apps" do
-      200
+  module V2
+    class Apps < Sinatra::Base
+      get "/apps" do
+        200
+      end
     end
   end
 end
 
 # config.ru
 run Sinatra::Router do
-  route API::AppsV1
-  route API::AppsV2
+  mount API::V1::Apps
+  mount API::V2::Apps
 end
 ```
 
