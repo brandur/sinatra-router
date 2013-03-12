@@ -80,7 +80,7 @@ module Sinatra
             status, headers, response = app.call(env)
 
             # if we got a pass, keep trying routes
-            return nil if headers["X-Cascade"] == "pass"
+            next if headers["X-Cascade"] == "pass"
 
             return status, headers, response
           end
