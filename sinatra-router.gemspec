@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name        = "sinatra-router"
-  gem.version     = "0.2.2"
+  gem.version     = "0.2.3"
 
   gem.author      = "Brandur"
   gem.email       = "brandur@mutelight.org"
@@ -10,5 +10,5 @@ Gem::Specification.new do |gem|
 
   gem.files = %w{lib/sinatra/router.rb}
 
-  gem.add_dependency "sinatra", "~> 1.4.0"
+  gem.add_dependency "sinatra", "~> 1.4"
 end
