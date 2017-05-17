@@ -10,7 +10,11 @@ Gem::Specification.new do |gem|
 
   gem.files = %w{lib/sinatra/router.rb}
 
-  gem.add_dependency "sinatra", ">= 1.4", "< 3.0"
+  if RUBY_VERSION >= '2.2.2'
+    gem.add_dependency "sinatra", ">= 1.4", "< 3.0"
+  else
+    gem.add_dependency "sinatra", "~> 1.4"
+  end
 
   gem.add_development_dependency "minitest"
   gem.add_development_dependency "rack-test"
