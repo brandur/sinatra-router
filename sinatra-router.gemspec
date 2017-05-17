@@ -13,4 +13,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "sinatra", ">= 1.4", "< 3.0"
 
   gem.add_development_dependency "rack-test"
+  gem.add_development_dependency "rake"
 end
