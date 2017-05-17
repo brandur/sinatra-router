@@ -4,6 +4,7 @@ module Sinatra
       @app        = app
       @apps       = []
       @conditions = []
+      @run        = nil
 
       instance_eval(&block) if block
       @routes = build_routing_table
@@ -76,7 +77,7 @@ module Sinatra
       # see Sinatra's `route!`
       if verb_routes = @routes[verb]
         verb_routes.each do |pattern, conditions, app|
-          if match = pattern.match(path) && conditions_match?(conditions, env)
+          if pattern.match(path) && conditions_match?(conditions, env)
             status, headers, response = app.call(env)
 
             # if we got a pass, keep trying routes
