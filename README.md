@@ -139,3 +139,13 @@ Run the tests:
 ``` bash
 ruby test/sinatra/router_test.rb
 ```
+
+## Release
+
+1. Update the version in `json_schema.gemspec` as appropriate for [semantic
+   versioning](http://semver.org) and add details to `CHANGELOG`.
+2. Run the `release` task:
+
+    ```
+    bundle exec rake release
+    ```
