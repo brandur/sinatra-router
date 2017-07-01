@@ -78,8 +78,8 @@ Or extend the router class to create your own concise DSL:
 ``` ruby
 module API
   class Router < Sinatra::Router
-    version(version, &block)
-      condition = lambda { |e| version == e["HTTP_X_VERSION"] }
+    def version(version, &block)
+      condition = lambda { |e| version.to_s == e["HTTP_X_VERSION"] }
       if block
         with_conditions(condition, &block)
       else
