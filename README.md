@@ -14,6 +14,8 @@ gem 'sinatra-router'
 Now as part of a builder or rackup (i.e. `config.ru`):
 
 ``` ruby
+require "sinatra/router"
+
 module API
   class Apps < Sinatra::Base
     get "/apps" do
@@ -29,7 +31,7 @@ module API
 end
 
 # config.ru
-run Sinatra::Router do
+run Sinatra::Router.new do
   mount API::Apps     # /apps
   mount API::Users    # /users
 end
@@ -38,7 +40,7 @@ end
 Or mount it as middleware:
 
 ``` ruby
-use Sinatra::Router do
+use Sinatra::Router.new do
   mount API::Apps
   mount API::Users
 end
@@ -63,7 +65,7 @@ This does get you most of the way there, but may have undesireable side effects.
 Add routing conditions with arguments or blocks:
 
 ``` ruby
-run Sinatra::Router do
+run Sinatra::Router.new do
   with_conditions(lambda { |e| e["HTTP_X_VERSION"] == "2" }) do
     mount API::V2::Apps
     mount API::V2::Users
@@ -126,7 +128,7 @@ module API
 end
 
 # config.ru
-run Sinatra::Router do
+run Sinatra::Router.new do
   mount API::V1::Apps
   mount API::V2::Apps
 end
