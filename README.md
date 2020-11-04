@@ -13,6 +13,7 @@ gem 'sinatra-router'
 Now as part of a builder or rackup (i.e. `config.ru`):
 
 ``` ruby
+require "sinatra"
 require "sinatra/router"
 
 module API
@@ -51,13 +52,13 @@ run Sinatra::Application
 An alternative is to just mount Sinatra apps as middleware, which is supported by Sinatra out of the box:
 
 ``` ruby
-run Rack::Builder.new {
+run Rack::Builder.new do
   use API::Apps
   use API::Users
-}
+end
 ```
 
-This does get you most of the way there, but may have undesireable side effects. For example, a request always gets passed through each middleware, whether that middleware can handle the route or not. So `before` filters in all your apps will be run until one app in the stack successfully handles the request. This can make it somewhat more difficult to modularize your app.
+This does get you most of the way there, but may have undesirable side effects. For example, a request always gets passed through each middleware, whether that middleware can handle the route or not. So `before` filters in all your apps will be run until one app in the stack successfully handles the request. This can make it somewhat more difficult to modularize your app.
 
 ## Conditional Routing
 
