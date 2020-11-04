@@ -1,0 +1,38 @@
+name: sinatra-router CI
+
+on:
+  pull_request:
+  push:
+  schedule:
+    # Run once a week.
+    - cron: "0 13 * * 0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        ruby: [ '2.4', '2.5', '2.6', '2.7' ]
+
+    name: Ruby ${{ matrix.ruby }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Run `bundle install`
+        run: bundle install
+
+      - name: Run tests
+        run: bundle exec rake test
+
+      # Makes sure that the one-off invocations on Ruby files still works.
+      - name: Run single test suite
+        run: ruby test/sinatra/router_test.rb
