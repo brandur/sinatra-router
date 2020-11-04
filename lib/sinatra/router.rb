@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 module Sinatra
+  # A Sinatra router that allows multiple Sinatra applications to be composed
+  # together.
   class Router
-    def initialize(app=nil, *args, &block)
+    def initialize(app = nil, *_args, &block)
       @app        = app
       @apps       = []
       @conditions = []
@@ -11,11 +15,13 @@ module Sinatra
     end
 
     def call(env)
-      if ret = try_route(env["REQUEST_METHOD"], env["PATH_INFO"], env)
+      if (ret = try_route(env['REQUEST_METHOD'], env['PATH_INFO'], env))
         ret
       else
-        raise "router needs to be (1) mounted as middleware or (b) contain " +
-          "a default run statement" if !@app && !@run
+        if !@app && !@run
+          raise 'router needs to be (1) mounted as middleware or (b) contain ' \
+            'a default run statement'
+        end
 
         # if set as middlware, prefer that, otherwise try default run module
         (@app || @run).call(env)
@@ -24,7 +30,8 @@ module Sinatra
 
     # specify the default app to run if no other app routes matched
     def run(app)
-      raise "@run already set" if @run
+      raise '@run already set' if @run
+
       @run = app
     end
 
@@ -45,7 +52,7 @@ module Sinatra
 
     def with_conditions(*args, &block)
       old = @conditions
-      @conditions = @conditions + args
+      @conditions += args
       instance_eval(&block) if block
       @conditions = old
     end
@@ -56,6 +63,7 @@ module Sinatra
       all_routes = {}
       @apps.each do |app, conditions|
         next unless app.respond_to?(:routes)
+
         app.routes.each do |verb, routes|
           all_routes[verb] ||= []
           all_routes[verb] += routes.map do |pattern, _, _, _|
@@ -75,16 +83,16 @@ module Sinatra
 
     def try_route(verb, path, env)
       # see Sinatra's `route!`
-      if verb_routes = @routes[verb]
+      if (verb_routes = @routes[verb])
         verb_routes.each do |pattern, conditions, app|
-          if pattern.match(path) && conditions_match?(conditions, env)
-            status, headers, response = app.call(env)
+          next if !pattern.match(path) || !conditions_match?(conditions, env)
 
-            # if we got a pass, keep trying routes
-            next if headers["X-Cascade"] == "pass"
+          status, headers, response = app.call(env)
 
-            return status, headers, response
-          end
+          # if we got a pass, keep trying routes
+          next if headers['X-Cascade'] == 'pass'
+
+          return status, headers, response
         end
       end
       nil
