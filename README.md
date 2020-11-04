@@ -1,5 +1,4 @@
-sinatra-router
-==============
+# sinatra-router [![Build Status](https://github.com/brandur/sinatra-router/workflows/sinatra-router%20CI/badge.svg)](https://github.com/brandur/sinatra-router/actions)
 
 A tiny vendorable router that makes it easy to try routes from a number of different modular Sinatra applications.
 
@@ -137,7 +136,7 @@ end
 Run the tests:
 
 ``` bash
-ruby test/sinatra/router_test.rb
+bundle exec ruby test/sinatra/router_test.rb
 ```
 
 ## Release
