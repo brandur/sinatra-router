@@ -27,6 +27,9 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
 
+      - name: Install RuboCop
+        run: gem install rubocop
+
       - name: Run `bundle install`
         run: bundle install
 
@@ -36,3 +39,6 @@ jobs:
       # Makes sure that the one-off invocations on Ruby files still works.
       - name: Run single test suite
         run: ruby test/sinatra/router_test.rb
+
+      - name: Run RuboCop
+        run: rubocop
