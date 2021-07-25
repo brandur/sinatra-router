@@ -20,7 +20,7 @@ module Sinatra
       else
         if !@app && !@run
           raise 'router needs to be (1) mounted as middleware or (b) contain ' \
-            'a default run statement'
+                'a default run statement'
         end
 
         # if set as middlware, prefer that, otherwise try default run module

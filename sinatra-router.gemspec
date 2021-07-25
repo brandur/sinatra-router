@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.homepage    = 'https://github.com/brandur/sinatra-router'
   gem.license     = 'MIT'
   gem.summary     = 'A tiny vendorable router that makes it easy to try ' \
-    'routes from a number of different modular Sinatra applications.'
+                    'routes from a number of different modular Sinatra applications.'
 
   gem.files = ['lib/sinatra/router.rb']
 
