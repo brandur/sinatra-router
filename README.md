@@ -40,7 +40,7 @@ end
 Or mount it as middleware:
 
 ``` ruby
-use Sinatra::Router.new do
+use Sinatra::Router do
   mount API::Apps
   mount API::Users
 end
