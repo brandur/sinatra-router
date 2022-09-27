@@ -11,6 +11,10 @@ Gem::Specification.new do |gem|
   gem.summary     = 'A tiny vendorable router that makes it easy to try ' \
                     'routes from a number of different modular Sinatra applications.'
 
+  gem.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
+
   gem.files = ['lib/sinatra/router.rb']
 
   gem.add_dependency 'sinatra', '>= 1.4', '< 4.0'
