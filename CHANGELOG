@@ -1,5 +1,9 @@
 Unreleased
 
+0.4.0 2024-01-27
+	Compatibility with Sinatra 4
+	Drop support for Ruby 2.7 (end of life March 2023)
+
 0.3.0 2020-09-27
 	Compatibility with Sinatra 3
 
