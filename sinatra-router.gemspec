@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name        = 'sinatra-router'
-  gem.version     = '0.3.0'
+  gem.version     = '0.4.0'
 
   gem.author      = 'Brandur'
   gem.email       = 'brandur@mutelight.org'
