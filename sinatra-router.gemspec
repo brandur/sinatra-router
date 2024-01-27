@@ -17,9 +17,5 @@ Gem::Specification.new do |gem|
 
   gem.files = ['lib/sinatra/router.rb']
 
-  gem.add_dependency 'sinatra', '>= 1.4', '< 4.0'
-
-  gem.add_development_dependency 'minitest'
-  gem.add_development_dependency 'rack-test'
-  gem.add_development_dependency 'rake'
+  gem.add_dependency 'sinatra', '>= 1.4'
 end
